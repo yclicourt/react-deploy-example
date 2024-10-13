@@ -48,7 +48,7 @@ jobs:
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'frontend-tasks-react:${{ github.sha }}'
+        image-ref: 'yoandevelop/frontend-tasks-react:${{ github.sha }}'
         format: 'sarif'
         output: 'trivy-results.sarif'
 
