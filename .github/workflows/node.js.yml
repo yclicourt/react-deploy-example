@@ -62,8 +62,8 @@ jobs:
       with:
         projectBaseDir: .
         args: >
-          -Dsonar.organization=yoadev-org
-          -Dsonar.projectKey=frontend-deploy-tasks
+          -D sonar.organization=yoadev-org
+          -D sonar.projectKey=frontend-deploy-tasks
         env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
