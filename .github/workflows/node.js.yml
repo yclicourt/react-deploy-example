@@ -64,6 +64,7 @@ jobs:
           kubectl create ns tasks
           kubectl config set-context --current --namespace=tasks
           kubectl apply -R -f ./deploy-k8s/
+          kubectl wait --for=condition=ready pod -l app=frontend-tasks --timeout=60s
 
       - name: Test service URLs
         run: |
