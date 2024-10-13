@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+
+  frontend: 
+    image: front-tasks:v1
+    container_name: front_task
+    ports:
+      - 8080:80
+    networks:
+      - demo
+
+networks:
+  demo:
+
