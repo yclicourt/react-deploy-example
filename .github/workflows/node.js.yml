@@ -63,7 +63,7 @@ jobs:
         run: |
           kubectl create ns tasks
           kubectl config set-context --current --namespace=tasks
-          kubectl apply -f -R ./deploy-k8s/
+          kubectl apply -R -f ./deploy-k8s/
 
       - name: Test service URLs
         run: |
