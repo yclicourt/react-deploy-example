@@ -68,31 +68,23 @@ jobs:
     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
   cd:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: ci
     steps:
+      - name: Start Minikube
+        id: minikube
+        uses: hiberbee/github-action-minikube@latest
+        with:
+          profile: github
 
-      - name: Check out code
-        uses: actions/checkout@v4
+      - name: Get Minikube status
+        run: minikube status
 
-      - name: Start minikube
-        uses: medyagh/setup-minikube@latest
+      - name: Get cluster info
+        run: kubectl cluster-info
 
-      - name: Try the cluster!
-        run: kubectl get pods -A
+      - name: Get Kubernetes pods
+        run: kubectl get services --all-namespaces
 
-      - name: Deploy to minikube
-        run: |
-          kubectl create ns tasks
-          kubectl config set-context --current --namespace=tasks
-          kubectl apply -R -f ./deploy-k8s/
-          kubectl wait --for=condition=ready pod -l app=frontend-tasks --timeout=120s
-          kubectl get all
-
-      - name: Test service URLs
-        run: |
-          minikube service list
-          minikube service frontend-tasks-svc -n tasks --url
-          echo -n "------------------opening the service-----------------------"
-          curl $(minikube service frontend-tasks-svc -n tasks --url)/version
-
+      - name: Get Minikube IP
+        run: echo ${{ steps.minikube.outputs.ip }}
